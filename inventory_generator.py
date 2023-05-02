@@ -4,11 +4,11 @@ from typing import List
 
 configs = {
     "masters": "1",
-    "workers": "1:10",
+    "workers": "1",
     "etcd": "1",
     "nfs": "1",
     "calico": "",
-    "total": 1,
+    "total": "1",
     "file": "hosts.ini",
     "start_ip": "172.18.8.10"
 }
