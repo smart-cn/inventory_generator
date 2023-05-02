@@ -39,6 +39,21 @@ def generate_ips(ip: str, steps: int):
     return ips
 
 
+def parse_numbers(input_str: str):
+    numbers = []
+    if input_str:
+        for part in input_str.split(','):  # split the input string by comma-separated parts
+            if ':' in part:  # if the part contains a colon, it represents a range
+                start, end = part.split(':')  # split the part into start and end values
+                numbers += list(range(int(start), int(end) + 1))  # add the range of numbers to the numbers list
+            elif '-' in part:  # if the part contains a minus, it represents a range
+                start, end = part.split('-')  # split the part into start and end values
+                numbers += list(range(int(start), int(end) + 1))  # add the range of numbers to the numbers list
+            else:
+                numbers.append(int(part))  # otherwise, parse the part as a single integer and add it to the list
+    return numbers
+
+
 def generate_configfile(**kwargs):
     filename = kwargs["file"]
     if os.path.isfile(filename):
