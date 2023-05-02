@@ -62,6 +62,13 @@ def generate_nodes_list(input_str: str, total_nodes: int):
     return nodes_list
 
 
+def generate_ansible_hosts(ip: str, steps: int):
+    ips = generate_ips(ip, steps)  # get the list of IP addresses
+    hosts = [f"node{i + 1} ansible_host={ip}" for i, ip in
+             enumerate(ips)]  # generate a list of strings with ord. numbers
+    return hosts
+
+
 def generate_configfile(**kwargs):
     filename = kwargs["file"]
     if os.path.isfile(filename):
