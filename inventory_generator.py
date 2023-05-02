@@ -22,7 +22,7 @@ def parse_args(arguments: List[str]):
         configs[key] = value
 
 
-def generate_ips(ip: str, steps: int) -> List[str]:
+def generate_ips(ip: str, steps: int):
     # Split the IP address into octets and convert each octet to an integer
     octets = [int(octet) for octet in ip.split(".")]
     # Convert the octets to a single integer
