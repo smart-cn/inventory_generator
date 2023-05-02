@@ -14,7 +14,7 @@ configs = {
 }
 
 
-def parse_args(arguments):
+def parse_args(arguments: List[str]):
     for arg in arguments:
         if "=" not in arg:
             raise ValueError(f"Invalid argument format: {arg}")
