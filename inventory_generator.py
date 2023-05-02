@@ -54,6 +54,14 @@ def parse_numbers(input_str: str):
     return numbers
 
 
+def generate_nodes_list(input_str: str, total_nodes: int):
+    nodes_list = []
+    for item in parse_numbers(input_str):
+        if item <= total_nodes:
+            nodes_list.append(f"node{item}")
+    return nodes_list
+
+
 def generate_configfile(**kwargs):
     filename = kwargs["file"]
     if os.path.isfile(filename):
