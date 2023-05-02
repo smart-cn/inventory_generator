@@ -70,13 +70,28 @@ def generate_ansible_hosts(ip: str, steps: int):
 
 
 def generate_configfile(**kwargs):
-    filename = kwargs["file"]
-    if os.path.isfile(filename):
-        print(f"Error: File {filename} already exists.")
+    if os.path.isfile(kwargs['file']):
+        print(f"Error: File {kwargs['file']} already exists.")
         sys.exit(1)
-    with open(filename, "w") as f:
-        for key, value in kwargs.items():
-            f.write(f"{key}: {value}\n")
+    with open(kwargs['file'], "w") as f:
+        for ip in generate_ansible_hosts(kwargs['start_ip'], int(kwargs['total'])):
+            f.write(f"{ip}\n")
+        f.write(f"\n[kube_control_plane]\n")
+        for node in generate_nodes_list(kwargs['masters'], kwargs['total']):
+            f.write(f"{node}\n")
+        f.write(f"\n[etcd]\n")
+        for node in generate_nodes_list(kwargs['etcd'], kwargs['total']):
+            f.write(f"{node}\n")
+        f.write(f"\n[kube_node]\n")
+        for node in generate_nodes_list(kwargs['workers'], kwargs['total']):
+            f.write(f"{node}\n")
+        f.write(f"\n[calico_rr]\n")
+        for node in generate_nodes_list(kwargs['calico'], kwargs['total']):
+            f.write(f"{node}\n")
+        f.write(f"\n[k8s_cluster:children]\n")
+        f.write(f"kube_control_plane\n")
+        f.write(f"kube_node\n")
+        f.write(f"calico_rr\n")
 
 
 if __name__ == "__main__":
