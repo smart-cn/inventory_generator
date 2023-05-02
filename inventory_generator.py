@@ -57,7 +57,7 @@ def parse_numbers(input_str: str):
 def generate_nodes_list(input_str: str, total_nodes: int):
     nodes_list = []
     for item in parse_numbers(input_str):
-        if item <= total_nodes:
+        if item <= int(total_nodes):
             nodes_list.append(f"node{item}")
     return nodes_list
 
