@@ -101,3 +101,4 @@ if __name__ == "__main__":
         generate_configfile(**configs)
     except Exception as e:
         print(f"Error: {str(e)}")
+        sys.exit(1)
