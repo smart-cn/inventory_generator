@@ -74,6 +74,7 @@ def generate_configfile(**kwargs):
         print(f"Error: File {kwargs['file']} already exists.")
         sys.exit(1)
     with open(kwargs['file'], "w") as f:
+        f.write(f"[all]\n")
         for ip in generate_ansible_hosts(kwargs['start_ip'], int(kwargs['total'])):
             f.write(f"{ip}\n")
         f.write(f"\n[kube_control_plane]\n")
