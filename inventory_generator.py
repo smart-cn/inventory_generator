@@ -86,12 +86,16 @@ def generate_configfile(**kwargs):
         f.write(f"\n[kube_node]\n")
         for node in generate_nodes_list(kwargs['workers'], kwargs['total']):
             f.write(f"{node}\n")
+        f.write(f"\n[nfs]\n")
+        for node in generate_nodes_list(kwargs['nfs'], kwargs['total']):
+            f.write(f"{node}\n")
         f.write(f"\n[calico_rr]\n")
         for node in generate_nodes_list(kwargs['calico'], kwargs['total']):
             f.write(f"{node}\n")
         f.write(f"\n[k8s_cluster:children]\n")
         f.write(f"kube_control_plane\n")
         f.write(f"kube_node\n")
+        f.write(f"nfs\n")
         f.write(f"calico_rr\n")
 
 
