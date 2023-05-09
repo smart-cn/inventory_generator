@@ -92,7 +92,7 @@ def generate_configfile(**kwargs):
                     and (node not in generate_nodes_list(kwargs['workers'], kwargs['total'])
                          and (node not in generate_nodes_list(kwargs['calico'], kwargs['total']))):
                 f.write(f"{node} ")
-                f.write("node_labels={\"dedicated=nfs-storage\":\"NoSchedule\"}\n")
+                f.write("node_taints={\"dedicated=nfs-storage\":\"NoSchedule\"}\n")
             else:
                 f.write(f"{node}\n")
         f.write(f"\n[calico_rr]\n")
