@@ -92,11 +92,23 @@ def generate_configfile(**kwargs):
         f.write(f"\n[calico_rr]\n")
         for node in generate_nodes_list(kwargs['calico'], kwargs['total']):
             f.write(f"{node}\n")
-        f.write(f"\n[k8s_cluster:children]\n")
-        f.write(f"kube_control_plane\n")
-        f.write(f"kube_node\n")
-        f.write(f"nfs\n")
-        f.write(f"calico_rr\n")
+        f.write("\n[k8s_cluster:children]\n")
+        f.write("kube_control_plane\n")
+        f.write("kube_node\n")
+        f.write("nfs\n")
+        f.write("calico_rr\n")
+        f.write("\n[kube_control_plane:vars]\n")
+        f.write("node_labels={\"kube_control_plane\":\"true\"}\n")
+        f.write("\n[etcd:vars]\n")
+        f.write("node_labels={\"etcd\":\"true\"}\n")
+        f.write("\n[kube_node:vars]\n")
+        f.write("node_labels={\"kube_node\":\"true\"}\n")
+        f.write("\n[nfs:vars]\n")
+        f.write("node_labels={\"nfs\":\"true\"}\n")
+        f.write("node_labels={\"node-role.kubernetes.io/nfs-storage\":\"true\"}\n")
+        f.write("\n[calico_rr:vars]\n")
+        f.write("node_labels={\"calico_rr\":\"true\"}\n")
+        f.write("node_labels={\"node-role.kubernetes.io/calico-rr\":\"true\"}\n")
 
 
 if __name__ == "__main__":
