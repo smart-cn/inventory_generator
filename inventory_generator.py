@@ -88,7 +88,12 @@ def generate_configfile(**kwargs):
             f.write(f"{node}\n")
         f.write(f"\n[nfs]\n")
         for node in generate_nodes_list(kwargs['nfs'], kwargs['total']):
-            f.write(f"{node}\n")
+            if (node not in generate_nodes_list(kwargs['masters'], kwargs['total'])) \
+                    and (node not in generate_nodes_list(kwargs['workers'], kwargs['total'])
+                         and (node not in generate_nodes_list(kwargs['calico'], kwargs['total']))):
+                f.write("{node} node_labels={\"dedicated=nfs-storage\":\"NoSchedule\"}\n")
+            else:
+                f.write(f"{node}\n")
         f.write(f"\n[calico_rr]\n")
         for node in generate_nodes_list(kwargs['calico'], kwargs['total']):
             f.write(f"{node}\n")
