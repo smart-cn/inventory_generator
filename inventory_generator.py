@@ -92,7 +92,7 @@ def generate_configfile(**kwargs):
                     and (node not in generate_nodes_list(kwargs['workers'], kwargs['total'])
                          and (node not in generate_nodes_list(kwargs['calico'], kwargs['total']))):
                 f.write(f"{node} ")
-                f.write("node_taints={\"dedicated=nfs-storage\":\"NoSchedule\"}\n")
+                f.write("taints={\"dedicated=nfs-storage\":\"NoSchedule\"}\n")
             else:
                 f.write(f"{node}\n")
         f.write(f"\n[calico_rr]\n")
@@ -104,16 +104,13 @@ def generate_configfile(**kwargs):
         f.write("nfs\n")
         f.write("calico_rr\n")
         f.write("\n[kube_control_plane:vars]\n")
-        f.write("node_labels={\"kube_control_plane\":\"true\"}\n")
         f.write("\n[etcd:vars]\n")
-        f.write("node_labels={\"etcd\":\"true\"}\n")
+        f.write("node_labels={\"node-role.kubernetes.io/etcd\":\"true\"}\n")
         f.write("\n[kube_node:vars]\n")
         f.write("node_labels={\"kube_node\":\"true\"}\n")
         f.write("\n[nfs:vars]\n")
-        f.write("node_labels={\"nfs\":\"true\"}\n")
         f.write("node_labels={\"node-role.kubernetes.io/nfs-storage\":\"true\"}\n")
         f.write("\n[calico_rr:vars]\n")
-        f.write("node_labels={\"calico_rr\":\"true\"}\n")
         f.write("node_labels={\"node-role.kubernetes.io/calico-rr\":\"true\"}\n")
 
 
